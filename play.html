@@ -228,5 +228,13 @@ draw()}catch(err){console.error(err)}
 requestAnimationFrame(loop)}
 requestAnimationFrame(t=>{last=t;loop(t)});
 </script>
+
+<script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('./sw.js');
+  }
+</script>
+
 </body>
 </html>
+
