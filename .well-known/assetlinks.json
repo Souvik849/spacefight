@@ -1,8 +1,0 @@
-[{
-      "relation": ["delegate_permission/common.handle_all_urls"],
-      "target": {
-        "namespace": "android_app",
-        "package_name": "io.github.souvik849.twa",
-        "sha256_cert_fingerprints": ["BF:D7:2D:C7:F3:8F:FA:B3:6F:BA:87:0C:B0:FC:DD:40:2E:78:70:9F:A0:79:50:C5:1B:3B:A8:F6:C2:E6:10:18"]
-      }
-    }]
