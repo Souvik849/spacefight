@@ -68,6 +68,12 @@ canvas{position:absolute;inset:0;width:100%;height:100%}
 @keyframes ln{to{width:min(70vw,320px)}}
 @media (prefers-reduced-motion:reduce){#spt span{opacity:1;transform:none;filter:none}#spl{width:min(70vw,320px)}}
 @keyframes pop{from{opacity:0;transform:translateY(26px) scale(.84)}to{opacity:1;transform:none}}
+#upm{position:absolute;inset:0;z-index:60;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.82);font-family:"Trebuchet MS",system-ui,"Noto Sans Bengali",sans-serif}
+.ubar{height:16px;border:3px solid #0f1724;border-radius:8px;background:#1c2a3d;overflow:hidden;margin:4px 0 12px}
+.ubar i{display:block;height:100%;width:0;background:repeating-linear-gradient(115deg,#1faa84 0 12px,#0d6f58 12px 16px);transition:width .2s}
+.spin{width:34px;height:34px;margin:0 auto 12px;border:4px solid #1c3550;border-top-color:#8ff3ff;border-radius:50%;animation:spn .9s linear infinite}
+@keyframes spn{to{transform:rotate(360deg)}}
+#okmsg{position:absolute;left:0;right:0;bottom:12%;text-align:center;color:#fff;font-weight:900;font-size:21px;letter-spacing:1px;text-shadow:0 0 14px #8ff3ff;animation:rise .5s both}
 #ab{width:150px;height:12px;margin:7px 0 0 4px;box-sizing:border-box;background:#2b1a02;border:2px solid #5a3600;border-radius:6px;overflow:hidden}
 #am{display:block;height:100%;width:100%;background:repeating-linear-gradient(90deg,#ffd13a 0 8px,#b8860b 8px 10px)}
 #am.low{background:repeating-linear-gradient(90deg,#ff4b4b 0 8px,#8a1c1c 8px 10px)}
@@ -80,6 +86,11 @@ canvas{position:absolute;inset:0;width:100%;height:100%}
 <div id="wrap">
 <canvas id="c"></canvas>
 <div class="hud"><div><div id="hb"><div class="cap">−</div><div class="trk"><i id="hp"></i></div><div class="cap">+</div></div><div id="ab"><i id="am"></i></div></div><div id="sb"><div class="cap">★</div><div class="num" id="sc">0</div></div><span id="best" class="hide"></span></div>
+<div id="upm" class="hide"><div class="panel"><h3 data-t="updt">UPDATE</h3>
+<p class="txt" id="upn" data-t="updn">NEW VERSION AVAILABLE</p>
+<p class="txt" id="ups" style="color:#9fe9ff;font-weight:700"></p>
+<div id="upl" class="hide"><div class="spin"></div><div class="ubar"><i id="upf"></i></div></div>
+<button class="b o" id="upgo" data-t="updb" style="margin:8px 0 0">UPDATE</button></div></div>
 <div id="splash"><div id="spt"></div><div id="spl"></div></div>
 <button id="pb" aria-label="Pause"><svg viewBox="0 0 24 24" width="20" height="20"><g fill="#27425c"><rect x="3" y="3" width="4" height="4" rx="1"/><rect x="9" y="3" width="12" height="4" rx="1"/><rect x="3" y="10" width="4" height="4" rx="1"/><rect x="9" y="10" width="12" height="4" rx="1"/><rect x="3" y="17" width="4" height="4" rx="1"/><rect x="9" y="17" width="12" height="4" rx="1"/></g></svg></button>
 
@@ -102,6 +113,7 @@ canvas{position:absolute;inset:0;width:100%;height:100%}
 <div class="pi"><button class="ib lb" id="pm"><svg viewBox="0 0 24 24" width="30" height="30"><g fill="#27425c"><rect x="3" y="3" width="4" height="4" rx="1"/><rect x="9" y="3" width="12" height="4" rx="1"/><rect x="3" y="10" width="4" height="4" rx="1"/><rect x="9" y="10" width="12" height="4" rx="1"/><rect x="3" y="17" width="4" height="4" rx="1"/><rect x="9" y="17" width="12" height="4" rx="1"/></g></svg></button><span data-t="menu">GAME MENU</span></div>
 </div></div>
 <div class="panel hide" id="p-lang"><h3 data-t="langt">LANGUAGE</h3><button class="cl">✕</button><button class="b o lo" data-l="en">ENGLISH</button><button class="b g lo" data-l="bn">বাংলা</button><button class="b pk lo" data-l="ur">اردو</button><button class="b lb lo" data-l="hi">हिन्दी</button></div>
+<div id="okmsg" class="hide" data-t="updok">UPDATE SUCCESSFUL</div>
 <div class="panel hide" id="p-help"><h3 data-t="help">HELP</h3><button class="cl">✕</button><p class="txt" data-t="helptxt"></p></div>
 <div class="panel hide" id="p-credits"><h3 data-t="credits">CREDITS</h3><button class="cl">✕</button><p class="txt" data-t="credtxt"></p></div>
 </div>
@@ -124,8 +136,8 @@ function end(){state='menu';$('joy').classList.add('hide');if(time>best){best=ti
 $('title').dataset.t='lost';$('play').dataset.t='again';showBest();applyLang();$('bt').textContent=T('scl')+score+'\n'+T('bt')+bestScore;openPanel('main');$('ui').classList.remove('hide');setMusic()}
 $('play').onclick=start;
 var L='en',D,AC,mus,musicOn=true,soundOn=true;
-D={en:{title:'SPACE FIGHT',lost:'PLANET LOST',menu:'GAME MENU',play:'PLAY',again:'PLAY AGAIN',help:'HELP',settings:'SETTINGS',credits:'CREDITS',music:'MUSIC',sound:'SOUND',bt:'BEST SCORE ',scl:'SCORE ',surv:'SURVIVED ',lang:'ENGLISH',langt:'LANGUAGE',upd:'NEW UPDATE',chk:'CHECK UPDATE',chking:'CHECKING...',uptd:'UP TO DATE',paused:'PAUSED',resume:'RESUME',restart:'RESTART',helptxt:'Drag the joystick to aim your ship around the planet. Tap FIRE to shoot the red invaders. Catch the HP orb to heal your planet.',credtxt:'Planet Guard — a tiny space defense game. Built with Claude.'},
-bn:{title:'স্পেস ফাইট',lost:'গ্রহ হারিয়ে গেল',menu:'গেম মেনু',play:'খেলুন',again:'আবার খেলুন',help:'সাহায্য',settings:'সেটিংস',credits:'ক্রেডিটস',music:'মিউজিক',sound:'সাউন্ড',bt:'সেরা স্কোর ',scl:'স্কোর ',surv:'টিকে ছিলেন ',lang:'বাংলা',langt:'ভাষা',upd:'নতুন আপডেট',chk:'আপডেট দেখুন',chking:'দেখা হচ্ছে...',uptd:'সর্বশেষ আছে',paused:'বিরতি',resume:'চালু',restart:'রিপিট',helptxt:'জয়স্টিক ঘুরিয়ে পৃথিবীর চারপাশে জাহাজ ঘোরান। FIRE চেপে লাল শত্রুদের গুলি করুন। HP বল ধরলে পৃথিবীর হেলথ ফুল হবে।',credtxt:'প্ল্যানেট গার্ড — ছোট একটা মহাকাশ রক্ষার গেম। Claude দিয়ে বানানো।'},
+D={en:{title:'SPACE FIGHT',lost:'PLANET LOST',menu:'GAME MENU',play:'PLAY',again:'PLAY AGAIN',help:'HELP',settings:'SETTINGS',credits:'CREDITS',music:'MUSIC',sound:'SOUND',bt:'BEST SCORE ',scl:'SCORE ',surv:'SURVIVED ',lang:'ENGLISH',langt:'LANGUAGE',upd:'NEW UPDATE',chk:'CHECK UPDATE',chking:'CHECKING...',uptd:'UP TO DATE',updt:'UPDATE',updn:'NEW VERSION AVAILABLE',updb:'UPDATE',updl:'UPDATING...',updok:'UPDATE SUCCESSFUL',updf:'UPDATE FAILED. CHECK INTERNET',size:'Size',paused:'PAUSED',resume:'RESUME',restart:'RESTART',helptxt:'Drag the joystick to aim your ship around the planet. Tap FIRE to shoot the red invaders. Catch the HP orb to heal your planet.',credtxt:'Planet Guard — a tiny space defense game. Built with Claude.'},
+bn:{title:'স্পেস ফাইট',lost:'গ্রহ হারিয়ে গেল',menu:'গেম মেনু',play:'খেলুন',again:'আবার খেলুন',help:'সাহায্য',settings:'সেটিংস',credits:'ক্রেডিটস',music:'মিউজিক',sound:'সাউন্ড',bt:'সেরা স্কোর ',scl:'স্কোর ',surv:'টিকে ছিলেন ',lang:'বাংলা',langt:'ভাষা',upd:'নতুন আপডেট',chk:'আপডেট দেখুন',chking:'দেখা হচ্ছে...',uptd:'সর্বশেষ আছে',updt:'আপডেট',updn:'নতুন ভার্সন এসেছে',updb:'আপডেট',updl:'আপডেট হচ্ছে...',updok:'আপডেট সফল হয়েছে',updf:'আপডেট হয়নি, ইন্টারনেট দেখুন',size:'সাইজ',paused:'বিরতি',resume:'চালু',restart:'রিপিট',helptxt:'জয়স্টিক ঘুরিয়ে পৃথিবীর চারপাশে জাহাজ ঘোরান। FIRE চেপে লাল শত্রুদের গুলি করুন। HP বল ধরলে পৃথিবীর হেলথ ফুল হবে।',credtxt:'প্ল্যানেট গার্ড — ছোট একটা মহাকাশ রক্ষার গেম। Claude দিয়ে বানানো।'},
 ur:{title:'اسپیس فائٹ',lost:'سیارہ ہار گیا',menu:'گیم مینو',play:'کھیلیں',again:'دوبارہ کھیلیں',settings:'سیٹنگز',music:'موسیقی',sound:'آواز',bt:'بہترین اسکور ',scl:'اسکور ',surv:'بچے رہے ',lang:'اردو',langt:'زبان',paused:'وقفہ',resume:'جاری',restart:'دوبارہ'},
 hi:{title:'स्पेस फाइट',lost:'ग्रह हार गया',menu:'गेम मेनू',play:'खेलें',again:'फिर खेलें',settings:'सेटिंग्स',music:'संगीत',sound:'आवाज़',bt:'सर्वश्रेष्ठ स्कोर ',scl:'स्कोर ',surv:'टिके रहे ',lang:'हिन्दी',langt:'भाषा',paused:'रुका',resume:'चालू',restart:'रिपीट'}};
 function T(k){return D&&(D[L][k]||D.en[k])||''}
@@ -140,8 +152,15 @@ $('tm').onclick=e=>{musicOn=!musicOn;e.currentTarget.classList.toggle('on',music
 $('ts').onclick=e=>{soundOn=!soundOn;e.currentTarget.classList.toggle('on',soundOn);beep(600,.1,'square',.04)};
 var VER=1,newV=0;
 function flash(k){const b=$('ucheck');b.dataset.t=k;applyLang();if(k!=='chking')setTimeout(()=>{b.dataset.t='chk';applyLang()},2200)}
-function doUpd(v){location.href=location.pathname+'?v='+v}
-function chkUpd(manual){if(manual)flash('chking');return fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(r=>r.json()).then(j=>{const nw=+j.version>VER;if(nw)newV=+j.version;$('upd').classList.toggle('hide',!nw);if(manual){if(nw)doUpd(newV);else flash('uptd')}}).catch(()=>{if(manual)flash('uptd')})}
+var upSize='';
+function doUpd(v){$('ups').textContent=upSize?T('size')+': '+upSize+' MB':'';$('upm').classList.remove('hide')}
+function runUpd(){const g=$('upgo'),f=$('upf');g.classList.add('hide');$('upl').classList.remove('hide');$('upn').dataset.t='updl';applyLang();
+let p=0,done=false;const t0=Date.now();
+const tick=setInterval(()=>{p+=(done?100-p:88-p)*(done?.2:.06);f.style.width=p+'%';if(done&&p>98.5){clearInterval(tick);f.style.width='100%';setTimeout(()=>{try{localStorage.setItem('pgupd','1')}catch(e){}location.reload()},400)}},80);
+fetch(location.pathname,{cache:'reload'}).then(r=>{if(!r.ok)throw 0;return r.text()}).then(()=>setTimeout(()=>{done=true},Math.max(0,1800-(Date.now()-t0)))).catch(()=>{clearInterval(tick);f.style.width='0';$('upl').classList.add('hide');g.classList.remove('hide');$('upn').dataset.t='updf';applyLang()})}
+function chkUpd(manual){if(manual)flash('chking');return fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(r=>r.json()).then(j=>{const nw=+j.version>VER;if(nw){newV=+j.version;upSize=j.size||'';doUpd(newV)}else if(manual)flash('uptd')}).catch(()=>{if(manual)flash('uptd')})}
+$('upgo').onclick=runUpd;
+try{if(localStorage.getItem('pgupd')){localStorage.removeItem('pgupd');setTimeout(()=>$('okmsg').classList.remove('hide'),3500);setTimeout(()=>$('okmsg').classList.add('hide'),7500)}}catch(e){}
 $('upd').onclick=()=>doUpd(newV);$('ucheck').onclick=()=>chkUpd(true);chkUpd(false);
 $('lg').onclick=()=>openPanel('lang');document.querySelectorAll('.lo').forEach(b=>b.onclick=()=>{L=b.dataset.l;$('ui').dir=L==='ur'?'rtl':'ltr';applyLang();openPanel('main')});
 var paused=false;
