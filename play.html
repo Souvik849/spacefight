@@ -4,6 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Space Fight</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#02030a">
 <style>
 :root{--bg:#02030a;--ink:#8ff3ff;--dim:#4aa8c0;--red:#ff4b4b;color-scheme:dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 @media (prefers-color-scheme:dark){:root{--bg:#02030a}}
@@ -151,6 +153,7 @@ function setMusic(){document.body.classList.toggle('m',state!=='play');const a=a
 $('tm').onclick=e=>{musicOn=!musicOn;e.currentTarget.classList.toggle('on',musicOn);setMusic()};
 $('ts').onclick=e=>{soundOn=!soundOn;e.currentTarget.classList.toggle('on',soundOn);beep(600,.1,'square',.04)};
 var VER=1,newV=0;
+try{if('serviceWorker' in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{})}catch(e){}
 function flash(k){const b=$('ucheck');b.dataset.t=k;applyLang();if(k!=='chking')setTimeout(()=>{b.dataset.t='chk';applyLang()},2200)}
 var upSize='';
 function doUpd(v){$('ups').textContent=upSize?T('size')+': '+upSize+' MB':'';$('upm').classList.remove('hide')}
