@@ -1,6 +1,6 @@
 {
   "name": "spacefight-multiplayer",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Multiplayer server for Space Fight",
   "main": "server.js",
   "scripts": {
